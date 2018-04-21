@@ -10,11 +10,14 @@ import flixel.util.FlxTimer;
 import flixel.tweens.FlxTween;
 import flixel.tweens.FlxEase;
 import flixel.math.FlxPoint;
+import flixel.addons.display.FlxBackdrop;
 
 class PlayState extends FlxState
 {
   var playerProjectileGroup:FlxSpriteGroup;
   var enemyProjectileGroup:FlxSpriteGroup;
+
+  var player:Player;
 
   override public function create():Void {
     super.create();
@@ -22,11 +25,30 @@ class PlayState extends FlxState
     Reg.started = false;
     Reg.score = 0;
 
+    bgColor = 0xff62acda;
+
+    var background = new FlxBackdrop("assets/images/background.png");
+    background.velocity.x = 0;
+    background.velocity.y = 10;
+    background.scale.x = background.scale.y = 2;
+    background.color = 0xffb0d0e5;
+    add(background);
+
     playerProjectileGroup = new FlxSpriteGroup();
     Reg.playerProjectileService = new ProjectileService(playerProjectileGroup);
 
+    add(playerProjectileGroup);
+
     enemyProjectileGroup = new FlxSpriteGroup();
     Reg.enemyProjectileService = new ProjectileService(enemyProjectileGroup, "enemy");
+
+    player = new Player();
+    player.init();
+    player.y = FlxG.height - 20;
+    player.x = FlxG.width / 2 - player.width / 2;
+    add(player);
+
+    FlxG.mouse.visible = false;
 
     FlxG.debugger.drawDebug = true;
   }

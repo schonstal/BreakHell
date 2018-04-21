@@ -14,7 +14,6 @@ import flixel.util.FlxSpriteUtil;
 class Player extends Enemy
 {
   public static var RUN_SPEED:Float = 200;
-  public static var gravity:Float = 800;
 
   public var justHurt:Bool = false;
 
@@ -22,7 +21,7 @@ class Player extends Enemy
   var terminalVelocity:Float = 200;
 
   var shootTimer:Float = 0;
-  var shootRate:Float = 0.035;
+  var shootRate:Float = 0.1;
 
   var elapsed:Float = 0;
 
@@ -32,8 +31,6 @@ class Player extends Enemy
     y = Y;
     loadGraphic("assets/images/player/player.png", true, 12, 12);
 
-    visible = false;
-
     width = 5;
     height = 8;
 
@@ -41,37 +38,32 @@ class Player extends Enemy
     offset.x = 3;
 
     speed = new Point();
-    speed.y = jumpAmount;
     speed.x = 800;
-    solid = false;
 
     maxVelocity.x = RUN_SPEED;
 
     setFacingFlip(FlxObject.LEFT, true, false);
     setFacingFlip(FlxObject.RIGHT, false, false);
+
+    start();
   }
 
   public function init():Void {
     Reg.player = this;
-    jumpPressed = false;
-
-    jumpTimer = 0;
 
     velocity.x = velocity.y = 0;
     acceleration.x = 0;
 
     facing = FlxObject.RIGHT;
     acceleration.y = 0;
-    Reg.started = false;
     health = 100;
   }
 
   private function start():Void {
-    acceleration.y = gravity;
+    Reg.started = true;
     visible = true;
     solid = true;
     alive = true;
-    Reg.started = true;
   }
 
   public override function hurt(damage:Float):Void {
@@ -93,11 +85,9 @@ class Player extends Enemy
     if(pressed("left")) {
       acceleration.x = -speed.x * (velocity.x > 0 ? 4 : 1);
       facing = FlxObject.LEFT;
-      shoot();
     } else if(pressed("right")) {
       acceleration.x = speed.x * (velocity.x < 0 ? 4 : 1);
       facing = FlxObject.RIGHT;
-      shoot();
     } else if (Math.abs(velocity.x) < 10) {
       velocity.x = 0;
       acceleration.x = 0;
@@ -105,6 +95,10 @@ class Player extends Enemy
       acceleration.x = -speed.x * 2;
     } else if (velocity.x < 0) {
       acceleration.x = speed.x * 2;
+    }
+
+    if(pressed("shoot")) {
+      shoot();
     }
 
     if (x < 0) x = 0;
@@ -115,8 +109,8 @@ class Player extends Enemy
 
   private function shoot():Void {
     if (shootTimer <= 0) {
-      var direction = new FlxVector(facing == FlxObject.LEFT ? 1 : -1, Reg.random.float(-0.05, 0.05));
-      Reg.playerProjectileService.shoot(x + (facing == FlxObject.LEFT ? 8 : -8), y + 3, direction, facing);
+      var direction = new FlxVector(facing == FlxObject.LEFT ? -1 : 1, -1 + Reg.random.float(-0.05, 0.05));
+      Reg.playerProjectileService.shoot(x + (facing == FlxObject.LEFT ? -8 : 8), y + 3, direction, facing);
       shootTimer = shootRate;
       //FlxG.sound.play("assets/sounds/player/shoot.wav", 1 * FlxG.save.data.sfxVolume);
     }
@@ -149,31 +143,39 @@ class Player extends Enemy
   }
 
   private function justPressed(action:String):Bool {
-    if (action == (FlxG.save.data.invertControls ? "left" : "right")) {
+    if (action == "left") {
       return FlxG.keys.justPressed.LEFT || FlxG.keys.justPressed.A;
     }
-    if (action == (FlxG.save.data.invertControls ? "right" : "left")) {
+
+    if (action == "right") {
       return FlxG.keys.justPressed.RIGHT || FlxG.keys.justPressed.D;
     }
+
     if (action == "direction") {
       return justPressed("left") || justPressed("right");
+    }
+
+    if (action == "shoot") {
+      return FlxG.keys.justPressed.SPACE || FlxG.mouse.justPressed;
     }
     return false;
   }
 
   private function pressed(action:String):Bool {
-    if (action == "jump") {
-      return FlxG.keys.pressed.S || FlxG.keys.pressed.DOWN || FlxG.keys.pressed.W ||
-             FlxG.keys.pressed.UP || FlxG.keys.pressed.SPACE;
+    if (action == "left") {
+      return FlxG.keys.pressed.LEFT || FlxG.keys.pressed.A;
     }
-    if (action == (FlxG.save.data.invertControls ? "left" : "right")) {
-      return FlxG.keys.pressed.LEFT || FlxG.keys.justPressed.A;
+
+    if (action == "right") {
+      return FlxG.keys.pressed.RIGHT || FlxG.keys.pressed.D;
     }
-    if (action == (FlxG.save.data.invertControls ? "right" : "left")) {
-      return FlxG.keys.pressed.RIGHT || FlxG.keys.justPressed.D;
-    }
+
     if (action == "direction") {
       return pressed("left") || justPressed("right");
+    }
+
+    if (action == "shoot") {
+      return FlxG.keys.pressed.SPACE || FlxG.mouse.pressed;
     }
     return false;
   }

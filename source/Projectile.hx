@@ -10,7 +10,7 @@ import flixel.math.FlxVector;
 
 class Projectile extends FlxSpriteGroup
 {
-  inline static var SPEED = 450;
+  inline static var SPEED = 250;
 
   public var direction:FlxVector;
   public var physical = true;
@@ -53,6 +53,22 @@ class Projectile extends FlxSpriteGroup
     add(explosionSprite);
 
     initialize(X, Y, direction, facing);
+  }
+
+  public override function update(elapsed:Float) {
+    if (projectile.x > FlxG.width - projectile.width) {
+      projectile.velocity.x = -Math.abs(projectile.velocity.x);
+    }
+
+    if (projectile.x < 0) {
+      projectile.velocity.x = Math.abs(projectile.velocity.x);
+    }
+
+    if (projectile.y < 0) {
+      projectile.velocity.y = Math.abs(projectile.velocity.y);
+    }
+
+    super.update(elapsed);
   }
 
   public function initialize(X:Float, Y:Float, direction:FlxVector, facing:Int):Void {
