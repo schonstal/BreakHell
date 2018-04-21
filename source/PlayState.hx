@@ -18,6 +18,9 @@ class PlayState extends FlxState
   var enemyProjectileGroup:FlxSpriteGroup;
 
   var player:Player;
+  var enemyGroup:EnemyGroup;
+  var pointGroup:FlxSpriteGroup;
+  var enemyExplosionGroup:FlxSpriteGroup;
 
   override public function create():Void {
     super.create();
@@ -42,6 +45,12 @@ class PlayState extends FlxState
     enemyProjectileGroup = new FlxSpriteGroup();
     Reg.enemyProjectileService = new ProjectileService(enemyProjectileGroup, "enemy");
 
+    pointGroup = new FlxSpriteGroup();
+    Reg.pointService = new PointService(pointGroup);
+
+    enemyExplosionGroup = new FlxSpriteGroup();
+    Reg.enemyExplosionService = new EnemyExplosionService(enemyExplosionGroup);
+
     player = new Player();
     player.init();
     player.y = FlxG.height - 20;
@@ -51,6 +60,9 @@ class PlayState extends FlxState
     FlxG.mouse.visible = false;
 
     FlxG.debugger.drawDebug = true;
+
+    enemyGroup = new EnemyGroup();
+    add(enemyGroup);
   }
 
   override public function destroy():Void {
@@ -58,6 +70,11 @@ class PlayState extends FlxState
   }
 
   override public function update(elapsed:Float):Void {
+    FlxG.overlap(enemyGroup, playerProjectileGroup, function(enemy:FlxObject, projectile:FlxObject):Void {
+      if (enemy.alive) Projectile.handleCollision(enemy, projectile);
+      enemy.hurt(1);
+    });
+
     super.update(elapsed);
   }
 }

@@ -11,7 +11,7 @@ import flixel.group.FlxSpriteGroup;
 import flixel.util.FlxTimer;
 import flixel.util.FlxSpriteUtil;
 
-class Player extends Enemy
+class Player extends Actor
 {
   public static var RUN_SPEED:Float = 200;
 

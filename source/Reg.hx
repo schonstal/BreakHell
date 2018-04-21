@@ -18,7 +18,8 @@ class Reg {
 
   public static var started:Bool = false;
   public static var player:Player;
-  public static var score:Int;
+  public static var score:Int = 0;
+  public static var spawnRow:Int = 0;
 
   public static var TAU:Float = 6.28318530718;
 }

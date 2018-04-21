@@ -58,14 +58,17 @@ class Projectile extends FlxSpriteGroup
   public override function update(elapsed:Float) {
     if (projectile.x > FlxG.width - projectile.width) {
       projectile.velocity.x = -Math.abs(projectile.velocity.x);
+      projectile.animation.play("pulseInvert");
     }
 
     if (projectile.x < 0) {
       projectile.velocity.x = Math.abs(projectile.velocity.x);
+      projectile.animation.play("pulseInvert");
     }
 
     if (projectile.y < 0) {
       projectile.velocity.y = Math.abs(projectile.velocity.y);
+      projectile.animation.play("pulseInvert");
     }
 
     super.update(elapsed);
@@ -148,7 +151,7 @@ class Projectile extends FlxSpriteGroup
     exists = false;
   }
 
-  public static function handleCollision(other, projectile):Void {
-    cast(projectile, ProjectileSprite).onCollide();
+  public static function handleCollision(other:FlxObject, projectile:FlxObject):Void {
+    cast(projectile, ProjectileSprite).onCollide(other);
   }
 }

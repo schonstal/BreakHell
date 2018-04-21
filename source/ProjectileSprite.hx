@@ -16,10 +16,11 @@ class ProjectileSprite extends FlxSprite {
   public function new(name:String = "player") {
     super();
     this.name = name;
-    var size = name == "player" ? 16 : 8;
+    var size = 32;
 
-    loadGraphic('assets/images/projectiles/$name/projectile.png', true, size, size);
-    animation.add("pulse", [0, 1, 2], 10);
+    loadGraphic('assets/images/projectiles.png', true, size, size);
+    animation.add("pulse", [2, 3], 10);
+    animation.add("pulseInvert", [0, 1], 10);
     animation.play("pulse");
 
     width = WIDTH;
@@ -29,8 +30,14 @@ class ProjectileSprite extends FlxSprite {
     setFacingFlip(FlxObject.RIGHT, false, false);
   }
 
-  public function onCollide() {
-    if(onCollisionCallback != null) onCollisionCallback();
+  public function onCollide(other:FlxObject) {
+    if (touching | (FlxObject.RIGHT & FlxObject.LEFT) > 0) {
+      velocity.x = -velocity.x;
+    }
+
+    if (touching | (FlxObject.UP & FlxObject.DOWN) > 0) {
+      velocity.y = -velocity.y;
+    }
   }
 
   public function initialize():Void {
@@ -41,11 +48,11 @@ class ProjectileSprite extends FlxSprite {
   {
     var newWidth:Float = scale.x * WIDTH;
     var newHeight:Float = scale.y * HEIGHT;
-		
+
     width = newWidth;
     height = newHeight;
     offset.set( - ((newWidth - frameWidth) * 0.5), - ((newHeight - frameHeight) * 0.5));
-		centerOrigin();
+    centerOrigin();
     if (name == "player") {
       offset.x += (facing == FlxObject.LEFT ? 4 : -4);
     }
