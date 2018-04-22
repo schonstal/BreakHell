@@ -35,7 +35,8 @@ class ProjectileSprite extends FlxSprite {
       if (onCollisionCallback != null) {
         onCollisionCallback();
       }
-    } else {
+    // It's not a game jam without a terrible hack
+    } else if (other != Reg.rightWall && other != Reg.leftWall) {
       dangerous = true;
       animation.play("pulseInvert");
     }

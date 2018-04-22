@@ -48,16 +48,16 @@ class PlayState extends FlxState
     gameOverGroup = new GameOverGroup();
     wallGroup = new FlxSpriteGroup();
 
-    var wall = new FlxSprite();
-    wall.makeGraphic(40, FlxG.height, 0xff666666);
-    wall.immovable = true;
-    wallGroup.add(wall);
+    Reg.leftWall = new FlxSprite();
+    Reg.leftWall.makeGraphic(40, FlxG.height, 0xff666666);
+    Reg.leftWall.immovable = true;
+    wallGroup.add(Reg.leftWall);
 
-    wall = new FlxSprite();
-    wall.makeGraphic(40, FlxG.height, 0xff666666);
-    wall.immovable = true;
-    wall.x = FlxG.width - wall.width;
-    wallGroup.add(wall);
+    Reg.rightWall = new FlxSprite();
+    Reg.rightWall.makeGraphic(40, FlxG.height, 0xff666666);
+    Reg.rightWall.immovable = true;
+    Reg.rightWall.x = FlxG.width - Reg.rightWall.width;
+    wallGroup.add(Reg.rightWall);
 
     Reg.pointService = new PointService(pointGroup);
     Reg.playerProjectileService = new ProjectileService(playerProjectileGroup);
