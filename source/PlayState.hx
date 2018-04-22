@@ -30,6 +30,7 @@ class PlayState extends FlxState
     Reg.started = false;
     Reg.score = 0;
     Reg.spawnRow = 0;
+    Reg.scrollPosition = 0;
 
     bgColor = 0xff62acda;
 

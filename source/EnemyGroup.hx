@@ -15,25 +15,6 @@ class EnemyGroup extends FlxSpriteGroup {
   public function new() {
     super();
     spawnRow();
-    Reg.spawnRow++;
-    spawnRow();
-    Reg.spawnRow++;
-    spawnRow();
-    Reg.spawnRow++;
-    spawnRow();
-    Reg.spawnRow++;
-    spawnRow();
-    Reg.spawnRow++;
-    spawnRow();
-    Reg.spawnRow++;
-    spawnRow();
-    Reg.spawnRow++;
-    spawnRow();
-    Reg.spawnRow++;
-    spawnRow();
-    Reg.spawnRow++;
-    spawnRow();
-    Reg.spawnRow++;
   }
 
   function spawnRow():Void {
@@ -44,9 +25,17 @@ class EnemyGroup extends FlxSpriteGroup {
       e.initialize(column);
       add(e);
     }
+
+    Reg.spawnRow++;
   }
 
   override public function update(elapsed:Float):Void {
+    Reg.scrollPosition += Enemy.SPEED * elapsed;
+
+    if (Reg.scrollPosition > Reg.spawnRow * Enemy.SPEED - 100) {
+      spawnRow();
+    }
+
     super.update(elapsed);
   }
 }

@@ -20,6 +20,7 @@ class Reg {
   public static var player:Player;
   public static var score:Int = 0;
   public static var spawnRow:Int = 0;
+  public static var scrollPosition:Float = 0;
 
   public static var TAU:Float = 6.28318530718;
 }

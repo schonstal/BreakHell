@@ -8,8 +8,10 @@ import flixel.math.FlxPoint;
 class Enemy extends Actor {
   public static var ROW_HEIGHT:Int = 12;
   public static var COLUMN_WIDTH:Int = 30;
+  public static var SPEED:Int = 10;
 
   var startingHealth:Int = 0;
+  var row:Int = 0;
 
   public function new() {
     super();
@@ -31,8 +33,6 @@ class Enemy extends Actor {
       [4 + animationOffset, 5 + animationOffset, 6 + animationOffset, 7 + animationOffset],
       15
     );
-
-    velocity.y = 10;
   }
 
   public override function update(elapsed:Float):Void {
@@ -41,11 +41,18 @@ class Enemy extends Actor {
     } else {
       animation.play("damaged");
     }
+
     super.update(elapsed);
+
+    y = Reg.scrollPosition - (row * ROW_HEIGHT);
   }
 
   public function initialize(column:Int):Void {
     y = Reg.spawnRow * -ROW_HEIGHT;
     x = column * COLUMN_WIDTH + 41;
+    row = Reg.spawnRow;
+    alive = true;
+    exists = true;
+    health = startingHealth;
   }
 }
