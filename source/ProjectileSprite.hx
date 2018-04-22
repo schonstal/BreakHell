@@ -18,7 +18,7 @@ class ProjectileSprite extends FlxSprite {
     var size = 32;
     elasticity = 1;
 
-    loadGraphic('assets/images/projectiles.png', true, size, size);
+    loadGraphic('assets/images/projectiles/$name/projectiles.png', true, size, size);
     animation.add("pulse", [2, 3], 10);
     animation.add("pulseInvert", [0, 1], 10);
     animation.play("pulse");
