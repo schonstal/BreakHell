@@ -4,10 +4,11 @@ import flixel.FlxG;
 import flixel.FlxSprite;
 import flixel.util.FlxTimer;
 import flixel.math.FlxPoint;
+import flixel.addons.display.FlxNestedSprite;
 
 import flash.geom.ColorTransform;
 
-class Actor extends FlxSprite {
+class Actor extends FlxNestedSprite {
   var flashTimer:FlxTimer;
   var explosionTimer:FlxTimer;
   var explosionRate:Float = 0.2;
