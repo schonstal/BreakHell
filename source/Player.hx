@@ -101,10 +101,6 @@ class Player extends Actor
       shoot();
     }
 
-    if (x < 0) x = 0;
-    if (x > FlxG.width - width) x = FlxG.width - width;
-    if (y < 0) y = 0;
-    if (y > FlxG.height - height) y = FlxG.height - height;
   }
 
   private function shoot():Void {
@@ -125,6 +121,9 @@ class Player extends Actor
     }
 
     super.update(elapsed);
+
+    if (x < 40) x = 40;
+    if (x > FlxG.width - 40 - width) x = FlxG.width - width - 40;
   }
 
   public override function kill():Void {

@@ -38,7 +38,7 @@ class EnemyGroup extends FlxSpriteGroup {
 
   function spawnRow():Void {
     var column:Int;
-    for (column in 0...Std.int(FlxG.width / Enemy.COLUMN_WIDTH)) {
+    for (column in 0...8) {
       var e:Enemy = cast(recycle(Enemy), Enemy);
       e.spawn();
       e.initialize(column);

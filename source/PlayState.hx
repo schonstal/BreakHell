@@ -48,12 +48,12 @@ class PlayState extends FlxState
     wallGroup = new FlxSpriteGroup();
 
     var wall = new FlxSprite();
-    wall.makeGraphic(32, FlxG.height, 0xff666666);
+    wall.makeGraphic(40, FlxG.height, 0xff666666);
     wall.immovable = true;
     wallGroup.add(wall);
 
     wall = new FlxSprite();
-    wall.makeGraphic(32, FlxG.height, 0xff666666);
+    wall.makeGraphic(40, FlxG.height, 0xff666666);
     wall.immovable = true;
     wall.x = FlxG.width - wall.width;
     wallGroup.add(wall);
@@ -73,11 +73,10 @@ class PlayState extends FlxState
 
     add(enemyGroup);
     add(playerProjectileGroup);
+    add(player);
     add(wallGroup);
     add(enemyExplosionGroup);
     add(pointGroup);
-    add(player);
-
     add(gameOverGroup);
   }
 
