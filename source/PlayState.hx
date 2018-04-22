@@ -21,6 +21,7 @@ class PlayState extends FlxState
   var enemyGroup:EnemyGroup;
   var pointGroup:FlxSpriteGroup;
   var enemyExplosionGroup:FlxSpriteGroup;
+  var wallGroup:FlxSpriteGroup;
   var gameOverGroup:GameOverGroup;
 
   override public function create():Void {
@@ -44,6 +45,18 @@ class PlayState extends FlxState
     enemyGroup = new EnemyGroup();
     pointGroup = new FlxSpriteGroup();
     gameOverGroup = new GameOverGroup();
+    wallGroup = new FlxSpriteGroup();
+
+    var wall = new FlxSprite();
+    wall.makeGraphic(32, FlxG.height, 0xff666666);
+    wall.immovable = true;
+    wallGroup.add(wall);
+
+    wall = new FlxSprite();
+    wall.makeGraphic(32, FlxG.height, 0xff666666);
+    wall.immovable = true;
+    wall.x = FlxG.width - wall.width;
+    wallGroup.add(wall);
 
     Reg.pointService = new PointService(pointGroup);
     Reg.playerProjectileService = new ProjectileService(playerProjectileGroup);
@@ -60,6 +73,7 @@ class PlayState extends FlxState
 
     add(enemyGroup);
     add(playerProjectileGroup);
+    add(wallGroup);
     add(enemyExplosionGroup);
     add(pointGroup);
     add(player);
@@ -72,6 +86,10 @@ class PlayState extends FlxState
   }
 
   override public function update(elapsed:Float):Void {
+    FlxG.collide(wallGroup, playerProjectileGroup, function(wall:FlxObject, projectile:FlxObject):Void {
+      Projectile.handleCollision(wall, projectile);
+    });
+
     FlxG.collide(enemyGroup, playerProjectileGroup, function(enemy:FlxObject, projectile:FlxObject):Void {
       enemy.hurt(1);
       Projectile.handleCollision(enemy, projectile);
