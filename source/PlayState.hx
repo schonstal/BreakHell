@@ -70,11 +70,14 @@ class PlayState extends FlxState
   }
 
   override public function update(elapsed:Float):Void {
-    FlxG.overlap(enemyGroup, playerProjectileGroup, function(enemy:FlxObject, projectile:FlxObject):Void {
+    FlxG.collide(enemyGroup, playerProjectileGroup, function(enemy:FlxObject, projectile:FlxObject):Void {
       if (enemy.alive) Projectile.handleCollision(enemy, projectile);
       enemy.hurt(1);
     });
 
+    if (FlxG.keys.justPressed.Q) {
+      FlxG.switchState(new PlayState());
+    }
     super.update(elapsed);
   }
 }

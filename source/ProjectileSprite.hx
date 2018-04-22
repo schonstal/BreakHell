@@ -17,6 +17,7 @@ class ProjectileSprite extends FlxSprite {
     super();
     this.name = name;
     var size = 32;
+    elasticity = 1;
 
     loadGraphic('assets/images/projectiles.png', true, size, size);
     animation.add("pulse", [2, 3], 10);
@@ -31,6 +32,7 @@ class ProjectileSprite extends FlxSprite {
   }
 
   public function onCollide(other:FlxObject) {
+    return;
     if (touching | (FlxObject.RIGHT & FlxObject.LEFT) > 0) {
       velocity.x = -velocity.x;
     }
