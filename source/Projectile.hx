@@ -58,17 +58,17 @@ class Projectile extends FlxSpriteGroup
   public override function update(elapsed:Float) {
     if (projectile.x > FlxG.width - projectile.width) {
       projectile.velocity.x = -Math.abs(projectile.velocity.x);
-      projectile.animation.play("pulseInvert");
+      projectile.onCollide(null);
     }
 
     if (projectile.x < 0) {
       projectile.velocity.x = Math.abs(projectile.velocity.x);
-      projectile.animation.play("pulseInvert");
+      projectile.onCollide(null);
     }
 
     if (projectile.y < 0) {
       projectile.velocity.y = Math.abs(projectile.velocity.y);
-      projectile.animation.play("pulseInvert");
+      projectile.onCollide(null);
     }
 
     super.update(elapsed);

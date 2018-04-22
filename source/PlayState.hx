@@ -38,31 +38,28 @@ class PlayState extends FlxState
     add(background);
 
     playerProjectileGroup = new FlxSpriteGroup();
-    Reg.playerProjectileService = new ProjectileService(playerProjectileGroup);
-
-    add(playerProjectileGroup);
-
-    enemyProjectileGroup = new FlxSpriteGroup();
-    Reg.enemyProjectileService = new ProjectileService(enemyProjectileGroup, "enemy");
-
-    pointGroup = new FlxSpriteGroup();
-    Reg.pointService = new PointService(pointGroup);
-
     enemyExplosionGroup = new FlxSpriteGroup();
+    enemyGroup = new EnemyGroup();
+    pointGroup = new FlxSpriteGroup();
+
+    Reg.pointService = new PointService(pointGroup);
+    Reg.playerProjectileService = new ProjectileService(playerProjectileGroup);
     Reg.enemyExplosionService = new EnemyExplosionService(enemyExplosionGroup);
 
     player = new Player();
     player.init();
     player.y = FlxG.height - 20;
     player.x = FlxG.width / 2 - player.width / 2;
-    add(player);
 
     FlxG.mouse.visible = false;
 
     FlxG.debugger.drawDebug = true;
 
-    enemyGroup = new EnemyGroup();
     add(enemyGroup);
+    add(playerProjectileGroup);
+    add(enemyExplosionGroup);
+    add(pointGroup);
+    add(player);
   }
 
   override public function destroy():Void {
@@ -71,8 +68,15 @@ class PlayState extends FlxState
 
   override public function update(elapsed:Float):Void {
     FlxG.collide(enemyGroup, playerProjectileGroup, function(enemy:FlxObject, projectile:FlxObject):Void {
-      if (enemy.alive) Projectile.handleCollision(enemy, projectile);
       enemy.hurt(1);
+      Projectile.handleCollision(enemy, projectile);
+    });
+
+    FlxG.overlap(player, playerProjectileGroup, function(player:FlxObject, projectile:FlxObject):Void {
+      if (player.alive && cast(projectile, ProjectileSprite).isDangerous()) {
+        player.hurt(25);
+        Projectile.handleCollision(player, projectile);
+      }
     });
 
     if (FlxG.keys.justPressed.Q) {

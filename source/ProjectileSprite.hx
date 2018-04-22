@@ -8,8 +8,7 @@ class ProjectileSprite extends FlxSprite {
   var WIDTH = 6;
   var HEIGHT = 6;
   var name:String;
-  var dangerTimer:Float = 0;
-  var dangerTime:Float = 0.04;
+  var dangerous:Bool = false;
 
   public var onCollisionCallback:Void->Void;
 
@@ -31,19 +30,20 @@ class ProjectileSprite extends FlxSprite {
     setFacingFlip(FlxObject.RIGHT, false, false);
   }
 
-  public function onCollide(other:FlxObject) {
-    return;
-    if (touching | (FlxObject.RIGHT & FlxObject.LEFT) > 0) {
-      velocity.x = -velocity.x;
-    }
-
-    if (touching | (FlxObject.UP & FlxObject.DOWN) > 0) {
-      velocity.y = -velocity.y;
+  public function onCollide(other:FlxObject):Void {
+    if (other == Reg.player) {
+      if (onCollisionCallback != null) {
+        onCollisionCallback();
+      }
+    } else {
+      dangerous = true;
+      animation.play("pulseInvert");
     }
   }
 
   public function initialize():Void {
-    dangerTimer = 0;
+    dangerous = false;
+    animation.play("pulse");
   }
 
   override public function updateHitbox():Void
@@ -53,7 +53,10 @@ class ProjectileSprite extends FlxSprite {
 
     width = newWidth;
     height = newHeight;
-    offset.set( - ((newWidth - frameWidth) * 0.5), - ((newHeight - frameHeight) * 0.5));
+    offset.set(
+      -((newWidth - frameWidth) * 0.5),
+      -((newHeight - frameHeight) * 0.5)
+    );
     centerOrigin();
     if (name == "player") {
       offset.x += (facing == FlxObject.LEFT ? 4 : -4);
@@ -61,12 +64,10 @@ class ProjectileSprite extends FlxSprite {
   }
 
   public function isDangerous():Bool {
-    return dangerTimer >= dangerTime;
+    return dangerous;
   }
 
   override public function update(elapsed:Float):Void {
-    dangerTimer += elapsed;
-
     super.update(elapsed);
   }
 }

@@ -23,7 +23,7 @@ class EnemyExplosion extends FlxSprite {
         offset.y = 32;
         animation.add("explode", [0, 0, 1, 2, 2, 3, 3, 4, 4, 5, 5, 6, 6, 7, 7, 8, 8], 60, false);
       } else {
-        loadGraphic("assets/images/enemies/explosion.png", true, 32, 32);
+        loadGraphic("assets/images/enemy/explosion.png", true, 32, 32);
         offset.x = 16;
         offset.y = 16;
         animation.add("explode", [0, 1, 2, 3, 4, 5, 6], 15, false);
