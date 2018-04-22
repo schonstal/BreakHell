@@ -68,8 +68,6 @@ class PlayState extends FlxState
     player.y = FlxG.height - 20;
     player.x = FlxG.width / 2 - player.width / 2;
 
-    FlxG.mouse.visible = false;
-
     FlxG.debugger.drawDebug = true;
 
     add(enemyGroup);

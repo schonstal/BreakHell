@@ -104,8 +104,14 @@ class Player extends Actor
   }
 
   private function shoot():Void {
+    var direction:FlxVector = null;
+
     if (shootTimer <= 0) {
-      var direction = new FlxVector(facing == FlxObject.LEFT ? -1 : 1, -1 + Reg.random.float(-0.05, 0.05));
+      direction = new FlxVector(
+        FlxG.mouse.x - getMidpoint().x,
+        FlxG.mouse.y - getMidpoint().y
+      ).normalize();
+
       Reg.playerProjectileService.shoot(x + (facing == FlxObject.LEFT ? -8 : 8), y + 3, direction, facing);
       shootTimer = shootRate;
       //FlxG.sound.play("assets/sounds/player/shoot.wav", 1 * FlxG.save.data.sfxVolume);
