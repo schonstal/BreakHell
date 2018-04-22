@@ -21,12 +21,14 @@ class PlayState extends FlxState
   var enemyGroup:EnemyGroup;
   var pointGroup:FlxSpriteGroup;
   var enemyExplosionGroup:FlxSpriteGroup;
+  var gameOverGroup:GameOverGroup;
 
   override public function create():Void {
     super.create();
     Reg.random = new FlxRandom();
     Reg.started = false;
     Reg.score = 0;
+    Reg.spawnRow = 0;
 
     bgColor = 0xff62acda;
 
@@ -41,6 +43,7 @@ class PlayState extends FlxState
     enemyExplosionGroup = new FlxSpriteGroup();
     enemyGroup = new EnemyGroup();
     pointGroup = new FlxSpriteGroup();
+    gameOverGroup = new GameOverGroup();
 
     Reg.pointService = new PointService(pointGroup);
     Reg.playerProjectileService = new ProjectileService(playerProjectileGroup);
@@ -60,6 +63,8 @@ class PlayState extends FlxState
     add(enemyExplosionGroup);
     add(pointGroup);
     add(player);
+
+    add(gameOverGroup);
   }
 
   override public function destroy():Void {
@@ -79,9 +84,18 @@ class PlayState extends FlxState
       }
     });
 
-    if (FlxG.keys.justPressed.Q) {
+    if (FlxG.keys.justPressed.SPACE && !player.alive) {
       FlxG.switchState(new PlayState());
     }
+
+    if (FlxG.save.data.highScore == null || Reg.score > FlxG.save.data.highScore) {
+      FlxG.save.data.highScore = Reg.score;
+    }
+
     super.update(elapsed);
+
+    if (!player.alive) {
+      gameOverGroup.visible = true;
+    }
   }
 }
