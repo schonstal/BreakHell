@@ -37,7 +37,7 @@ class Projectile extends FlxSpriteGroup
     add(projectile);
 
     explosionSprite = new FlxSprite();
-    explosionSprite.loadGraphic('assets/images/projectiles/$name/hit.png', true, 32, 32);
+    explosionSprite.loadGraphic('assets/images/projectiles/$name/explosion.png', true, 32, 32);
     explosionSprite.animation.add("explode", [0, 1, 2, 3], 15, false);
     explosionSprite.solid = false;
     if (name == "enemy") {
