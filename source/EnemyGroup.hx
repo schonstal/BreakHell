@@ -9,8 +9,16 @@ import flixel.FlxObject;
 import flixel.math.FlxVector;
 import flixel.math.FlxMath;
 
+import flixel.tweens.FlxTween;
+import flixel.tweens.FlxEase;
+
 class EnemyGroup extends FlxSpriteGroup {
   var spawnTimer:Float = 0;
+
+  var activeTween:FlxTween;
+  var tweenPosition:Int = 0;
+  var scrollTimer:Float = 0;
+  var scrollRate:Float = 1;
 
   public function new() {
     super();
@@ -32,7 +40,19 @@ class EnemyGroup extends FlxSpriteGroup {
   }
 
   override public function update(elapsed:Float):Void {
-    Reg.scrollPosition += Enemy.SPEED * elapsed;
+    scrollTimer += elapsed;
+    if (scrollTimer > scrollRate) {
+      if (activeTween != null) activeTween.cancel();
+      tweenPosition += 1;
+      activeTween = FlxTween.tween(
+        Reg,
+        { scrollPosition: Enemy.ROW_HEIGHT * tweenPosition },
+        0.25,
+        { ease: FlxEase.quadOut }
+      );
+
+      scrollTimer = 0;
+    }
 
     if (Reg.scrollPosition > Reg.spawnRow * Enemy.SPEED - 100) {
       spawnRow();
