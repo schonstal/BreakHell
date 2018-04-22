@@ -13,11 +13,11 @@ import flixel.util.FlxSpriteUtil;
 
 class Player extends Actor
 {
-  public static var RUN_SPEED:Float = 200;
+  public static var RUN_SPEED:Float = 150;
+  public static var DECELERATION:Float = 2000;
 
   public var justHurt:Bool = false;
 
-  var speed:Point;
   var terminalVelocity:Float = 200;
 
   var shootTimer:Float = 0;
@@ -37,10 +37,8 @@ class Player extends Actor
     offset.y = 1;
     offset.x = 3;
 
-    speed = new Point();
-    speed.x = 800;
-
     maxVelocity.x = RUN_SPEED;
+    maxVelocity.y = RUN_SPEED;
 
     setFacingFlip(FlxObject.LEFT, true, false);
     setFacingFlip(FlxObject.RIGHT, false, false);
@@ -69,7 +67,7 @@ class Player extends Actor
   public override function hurt(damage:Float):Void {
     if(justHurt && damage < 100) return;
 
-    FlxG.camera.flash(0xccff1472, 0.5, null, true);
+    //FlxG.camera.flash(0xccff1472, 0.5, null, true);
     FlxG.camera.shake(0.005, 0.2);
 
     justHurt = true;
@@ -81,26 +79,38 @@ class Player extends Actor
     super.hurt(damage);
   }
 
-  private function handleMovement():Void {
+  private function xMovement():Void {
     if(pressed("left")) {
-      acceleration.x = -speed.x * (velocity.x > 0 ? 4 : 1);
+      velocity.x = -RUN_SPEED;
       facing = FlxObject.LEFT;
     } else if(pressed("right")) {
-      acceleration.x = speed.x * (velocity.x < 0 ? 4 : 1);
+      velocity.x = RUN_SPEED;
       facing = FlxObject.RIGHT;
     } else if (Math.abs(velocity.x) < 10) {
       velocity.x = 0;
       acceleration.x = 0;
     } else if (velocity.x > 0) {
-      acceleration.x = -speed.x * 2;
+      acceleration.x = -DECELERATION;
     } else if (velocity.x < 0) {
-      acceleration.x = speed.x * 2;
+      acceleration.x = DECELERATION;
     }
+  }
 
-    if(pressed("shoot")) {
-      shoot();
+  private function yMovement():Void {
+    if(pressed("up")) {
+      acceleration.y = 0;
+      velocity.y = -RUN_SPEED;
+    } else if(pressed("down")) {
+      acceleration.y = 0;
+      velocity.y = RUN_SPEED;
+    } else if (Math.abs(velocity.y) < 10) {
+      acceleration.y = 0;
+      velocity.y = 0;
+    } else if (velocity.y > 0) {
+      acceleration.y = -DECELERATION;
+    } else if (velocity.y < 0) {
+      acceleration.y = DECELERATION;
     }
-
   }
 
   private function shoot():Void {
@@ -122,7 +132,11 @@ class Player extends Actor
     this.elapsed = elapsed;
 
     if(alive && Reg.started) {
-      handleMovement();
+      xMovement();
+      //yMovement();
+      if(pressed("shoot")) {
+        shoot();
+      }
       updateTimers();
     }
 
@@ -156,6 +170,14 @@ class Player extends Actor
       return FlxG.keys.justPressed.RIGHT || FlxG.keys.justPressed.D;
     }
 
+    if (action == "up") {
+      return FlxG.keys.justPressed.UP || FlxG.keys.justPressed.W;
+    }
+
+    if (action == "down") {
+      return FlxG.keys.justPressed.DOWN || FlxG.keys.justPressed.S;
+    }
+
     if (action == "direction") {
       return justPressed("left") || justPressed("right");
     }
@@ -173,6 +195,14 @@ class Player extends Actor
 
     if (action == "right") {
       return FlxG.keys.pressed.RIGHT || FlxG.keys.pressed.D;
+    }
+
+    if (action == "up") {
+      return FlxG.keys.pressed.UP || FlxG.keys.pressed.W;
+    }
+
+    if (action == "down") {
+      return FlxG.keys.pressed.DOWN || FlxG.keys.pressed.S;
     }
 
     if (action == "direction") {
