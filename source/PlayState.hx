@@ -28,6 +28,8 @@ class PlayState extends FlxState
   var gameOverGroup:GameOverGroup;
   var powerupGroup:FlxGroup;
   var hud:Hud;
+  var ceiling:FlxSprite;
+  var glow:Glow;
 
   var backgroundGroup:BackgroundGroup;
   var gameOver:Bool = false;
@@ -37,7 +39,7 @@ class PlayState extends FlxState
     Reg.random = new FlxRandom();
     Reg.started = false;
     Reg.score = 0;
-    Reg.spawnRow = 1;
+    Reg.spawnRow = 0;
     Reg.scrollPosition = 0;
     Reg.screenEffect = new ScreenEffectSprite();
     Reg.difficulty = 0;
@@ -59,6 +61,8 @@ class PlayState extends FlxState
     powerupGroup = new FlxGroup();
     hud = new Hud();
 
+    glow = new Glow();
+
     Reg.leftWall = new FlxSprite();
     Reg.leftWall.loadGraphic("assets/images/background/walls.png", true, 40, FlxG.height);
     Reg.leftWall.immovable = true;
@@ -71,6 +75,11 @@ class PlayState extends FlxState
     Reg.rightWall.immovable = true;
     Reg.rightWall.x = FlxG.width - Reg.rightWall.width;
     wallGroup.add(Reg.rightWall);
+
+    ceiling = new FlxSprite();
+    ceiling.loadGraphic("assets/images/background/ceiling.png");
+    ceiling.immovable = true;
+    wallGroup.add(ceiling);
 
     Reg.pointService = new PointService(pointGroup);
     Reg.playerProjectileService = new ProjectileService(playerProjectileGroup);
@@ -88,6 +97,7 @@ class PlayState extends FlxState
 
     add(backgroundGroup);
     add(enemyGroup);
+    add(glow);
     add(playerRail);
     add(powerupGroup);
     add(player);
@@ -102,7 +112,7 @@ class PlayState extends FlxState
     if (FlxG.sound.music == null || !FlxG.sound.music.playing) {
       FlxG.sound.playMusic("assets/music/gameplay.ogg", 0.8);
     }
-    FlxG.sound.music.volume = 0.8;
+    FlxG.sound.music.volume = 0;
 
     add(Reg.screenEffect);
   }

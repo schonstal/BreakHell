@@ -17,8 +17,8 @@ class BackgroundGroup extends FlxSpriteGroup {
 
   public function new() {
     super();
-    var i:Int;
 
+    var i:Int;
     for (i in (0...10)) {
       spawnRow();
     }
