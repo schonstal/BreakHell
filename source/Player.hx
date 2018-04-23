@@ -164,7 +164,7 @@ class Player extends Actor
       turret.relativeAngle = getMidpoint().angleBetween(FlxG.mouse.getWorldPosition());
 
       xMovement();
-      yMovement();
+      //yMovement();
       if(pressed("shoot")) {
         shoot();
       }
