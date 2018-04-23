@@ -31,12 +31,20 @@ class EnemyGroup extends FlxSpriteGroup {
       if (Reg.random.int(0, 1) > 0) {
         var e:Enemy = cast(recycle(Enemy), Enemy);
         e.spawn();
-        e.initialize(column);
+        e.initialize(column, onFall);
         add(e);
       }
     }
 
     Reg.spawnRow++;
+  }
+
+  function onFall():Void {
+    scrollRate -= 0.1;
+
+    if (scrollRate < 0.25) {
+      scrollRate = 0.25;
+    }
   }
 
   override public function update(elapsed:Float):Void {

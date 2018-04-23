@@ -12,6 +12,7 @@ class Enemy extends Actor {
 
   var startingHealth:Int = 0;
   var row:Int = 0;
+  var onFall:Void->Void;
 
   public function new() {
     super();
@@ -42,18 +43,27 @@ class Enemy extends Actor {
       animation.play("damaged");
     }
 
+    if (y >= FlxG.height) {
+      points = 0;
+      kill();
+      if (onFall != null) {
+        onFall();
+      }
+    }
+
     super.update(elapsed);
 
     y = Reg.scrollPosition - (row * ROW_HEIGHT);
   }
 
-  public function initialize(column:Int):Void {
+  public function initialize(column:Int, ?onFall:Void->Void):Void {
     y = Reg.spawnRow * -ROW_HEIGHT;
     x = column * COLUMN_WIDTH + 41;
     row = Reg.spawnRow;
     alive = true;
     exists = true;
     health = startingHealth;
+    this.onFall = onFall;
   }
 
   override function die():Void {

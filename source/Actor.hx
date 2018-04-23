@@ -48,8 +48,10 @@ class Actor extends FlxNestedSprite {
     color = 0xff8c4a53;
     alive = false;
 
-    Reg.score += points;
-    Reg.pointService.showPoints(x + width/2, y + height/2, points);
+    if (points > 0) {
+      Reg.score += points;
+      Reg.pointService.showPoints(x + width/2, y + height/2, points);
+    }
 
     blowUp();
     die();

@@ -132,6 +132,12 @@ class PlayState extends FlxState
       cast(powerup, Powerup).onPickup();
     });
 
+    FlxG.overlap(player, enemyGroup, function(player:FlxObject, enemy:FlxObject):Void {
+      if (player.alive) {
+        player.hurt(100);
+      }
+    });
+
     if (FlxG.keys.justPressed.SPACE && !player.alive) {
       FlxG.switchState(new PlayState());
     }
