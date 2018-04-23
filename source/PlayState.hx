@@ -25,6 +25,7 @@ class PlayState extends FlxState
   var enemyExplosionGroup:FlxSpriteGroup;
   var wallGroup:FlxSpriteGroup;
   var gameOverGroup:GameOverGroup;
+  var hud:Hud;
 
   var backgroundGroup:BackgroundGroup;
 
@@ -49,6 +50,7 @@ class PlayState extends FlxState
     gameOverGroup = new GameOverGroup();
     wallGroup = new FlxSpriteGroup();
     backgroundGroup = new BackgroundGroup();
+    hud = new Hud();
 
     Reg.leftWall = new FlxSprite();
     Reg.leftWall.makeGraphic(40, FlxG.height, 0xff666666);
@@ -82,6 +84,7 @@ class PlayState extends FlxState
     add(wallGroup);
     add(enemyExplosionGroup);
     add(pointGroup);
+    add(hud);
     add(reticle);
     add(gameOverGroup);
   }
@@ -91,6 +94,8 @@ class PlayState extends FlxState
   }
 
   override public function update(elapsed:Float):Void {
+    FlxG.mouse.visible = false;
+
     FlxG.collide(wallGroup, playerProjectileGroup, function(wall:FlxObject, projectile:FlxObject):Void {
       Projectile.handleCollision(wall, projectile);
     });
