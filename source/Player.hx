@@ -164,7 +164,7 @@ class Player extends Actor
       turret.relativeAngle = getMidpoint().angleBetween(FlxG.mouse.getWorldPosition());
 
       xMovement();
-      //yMovement();
+      yMovement();
       if(pressed("shoot")) {
         shoot();
       }
@@ -175,6 +175,8 @@ class Player extends Actor
 
     if (x < 40) x = 40;
     if (x > FlxG.width - 40 - width) x = FlxG.width - width - 40;
+    if (y > FlxG.height - 20) y = FlxG.height - 20;
+    if (y < FlxG.height - 40) y = FlxG.height - 40;
   }
 
   public override function kill():Void {
