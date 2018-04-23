@@ -25,6 +25,8 @@ class PlayState extends FlxState
   var wallGroup:FlxSpriteGroup;
   var gameOverGroup:GameOverGroup;
 
+  var backgroundGroup:BackgroundGroup;
+
   override public function create():Void {
     super.create();
     Reg.random = new FlxRandom();
@@ -35,19 +37,13 @@ class PlayState extends FlxState
 
     bgColor = 0xff62acda;
 
-    var background = new FlxBackdrop("assets/images/background.png");
-    background.velocity.x = 0;
-    background.velocity.y = 10;
-    background.scale.x = background.scale.y = 2;
-    background.color = 0xffb0d0e5;
-    add(background);
-
     playerProjectileGroup = new FlxSpriteGroup();
     enemyExplosionGroup = new FlxSpriteGroup();
     enemyGroup = new EnemyGroup();
     pointGroup = new FlxSpriteGroup();
     gameOverGroup = new GameOverGroup();
     wallGroup = new FlxSpriteGroup();
+    backgroundGroup = new BackgroundGroup();
 
     Reg.leftWall = new FlxSprite();
     Reg.leftWall.makeGraphic(40, FlxG.height, 0xff666666);
@@ -74,6 +70,7 @@ class PlayState extends FlxState
     FlxG.debugger.drawDebug = true;
     FlxG.debugger.visible = true;
 
+    add(backgroundGroup);
     add(enemyGroup);
     add(playerRail);
     add(playerProjectileGroup);
