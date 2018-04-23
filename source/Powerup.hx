@@ -20,7 +20,7 @@ class Powerup extends FlxSprite {
     name = recycledName;
 
     if (!initialized) {
-      loadGraphic('assets/images/powerups/$name/pickup.png', true, 15, 15);
+      loadGraphic('assets/images/powerups/$name/pickup.png', true, 12, 12);
       animation.add("flash", [0, 1], 10, true);
       animation.play("flash");
     }
@@ -47,6 +47,10 @@ class Powerup extends FlxSprite {
       onPickupHealth();
     }
 
+    if (name == "upgrade") {
+      onPickupUpgrade();
+    }
+
     kill();
   }
 
@@ -54,6 +58,16 @@ class Powerup extends FlxSprite {
     Reg.player.health += 25;
     if (Reg.player.health >= 100) {
       Reg.player.health = 100;
+    }
+
+    Reg.screenEffect.flash(0xccffffff, 0.5, null, true);
+    FlxG.sound.play("assets/sounds/health.ogg", 0.6);
+  }
+
+  function onPickupUpgrade():Void {
+    Reg.player.shootRate *= 0.9;
+    if (Reg.player.shootRate <= 0.7) {
+      Reg.player.shootRate = 0.7;
     }
 
     Reg.screenEffect.flash(0xccffffff, 0.5, null, true);

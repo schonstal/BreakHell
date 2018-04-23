@@ -18,11 +18,11 @@ class Player extends Actor
   public static var DECELERATION:Float = 2000;
 
   public var justHurt:Bool = false;
+  public var shootRate:Float = 0.1;
 
   var terminalVelocity:Float = 200;
 
   var shootTimer:Float = 0;
-  var shootRate:Float = 0.1;
 
   var turret:FlxNestedSprite;
   var turretTimer:FlxTimer;

@@ -53,12 +53,7 @@ class PowerupGroup extends FlxSpriteGroup {
       particle.animation.add("2", [1]);
       particle.animation.play('$size');
 
-      particle.color = FlxColor.fromHSB(336,
-        size > 1 ? 0.9 : 0.1,
-        Reg.random.float(0.8, 1)
-      );
-
-      particle.x = powerupSprite.x + Reg.random.int(0, 12);
+      particle.x = powerupSprite.x + Reg.random.int(1, 9);
       particle.y = powerupSprite.y;
 
       particle.velocity.x = Reg.random.int(-10, 10);
