@@ -45,7 +45,7 @@ class PlayState extends FlxState
     FlxG.debugger.visible = true;
     FlxG.mouse.visible = false;
 
-    bgColor = 0xff62acda;
+    bgColor = 0xff15282e;
 
     playerProjectileGroup = new FlxSpriteGroup();
     enemyExplosionGroup = new FlxSpriteGroup();
@@ -58,12 +58,14 @@ class PlayState extends FlxState
     hud = new Hud();
 
     Reg.leftWall = new FlxSprite();
-    Reg.leftWall.makeGraphic(40, FlxG.height, 0xff666666);
+    Reg.leftWall.loadGraphic("assets/images/background/walls.png", true, 40, FlxG.height);
     Reg.leftWall.immovable = true;
     wallGroup.add(Reg.leftWall);
 
     Reg.rightWall = new FlxSprite();
-    Reg.rightWall.makeGraphic(40, FlxG.height, 0xff666666);
+    Reg.rightWall.loadGraphic("assets/images/background/walls.png", true, 40, FlxG.height);
+    Reg.rightWall.animation.add("idle", [7]);
+    Reg.rightWall.animation.play("idle");
     Reg.rightWall.immovable = true;
     Reg.rightWall.x = FlxG.width - Reg.rightWall.width;
     wallGroup.add(Reg.rightWall);
