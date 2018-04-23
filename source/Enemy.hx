@@ -10,7 +10,6 @@ class Enemy extends Actor {
   public static var COLUMN_WIDTH:Int = 30;
   public static var SPEED:Int = 10;
 
-  var startingHealth:Int = 0;
   var row:Int = 0;
   var onFall:Void->Void;
 

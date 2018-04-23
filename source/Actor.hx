@@ -9,6 +9,10 @@ import flixel.addons.display.FlxNestedSprite;
 import flash.geom.ColorTransform;
 
 class Actor extends FlxNestedSprite {
+  // GAME JAM!
+  public var startingHealth:Int = 100;
+  public var points:Int = 0;
+
   var flashTimer:FlxTimer;
   var explosionTimer:FlxTimer;
   var explosionRate:Float = 0.2;
@@ -18,8 +22,6 @@ class Actor extends FlxNestedSprite {
   var deathWidth:Float = 0;
   var deathHeight:Float = 0;
 
-  var points:Int;
-
   var explosionOffset:FlxPoint;
   var explosionCount:Int = 1;
 
@@ -27,8 +29,7 @@ class Actor extends FlxNestedSprite {
 
   public function new() {
     super();
-    health = 5;
-    points = 50;
+    health = startingHealth;
     flashTimer = new FlxTimer();
     explosionTimer = new FlxTimer();
     deathTimer = new FlxTimer();
@@ -63,7 +64,7 @@ class Actor extends FlxNestedSprite {
     for(i in 0...explosionCount) {
       Reg.enemyExplosionService.explode(x + width/2 + explosionOffset.x,
                                         y + height/2 + explosionOffset.y,
-                                        deathWidth, deathHeight);
+                                        deathWidth, deathHeight, this);
     }
   }
 
