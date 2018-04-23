@@ -72,7 +72,7 @@ class PlayState extends FlxState
     playerRail = new PlayerRail();
 
     FlxG.debugger.drawDebug = true;
-    // FlxG.debugger.visible = true;
+    FlxG.debugger.visible = true;
 
     add(enemyGroup);
     add(playerRail);

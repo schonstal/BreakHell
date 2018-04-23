@@ -59,9 +59,6 @@ class ProjectileSprite extends FlxSprite {
       -((newHeight - frameHeight) * 0.5)
     );
     centerOrigin();
-    if (name == "player") {
-      offset.x += (facing == FlxObject.LEFT ? 4 : -4);
-    }
   }
 
   public function isDangerous():Bool {
