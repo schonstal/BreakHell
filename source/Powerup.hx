@@ -56,7 +56,7 @@ class Powerup extends FlxSprite {
       Reg.player.health = 100;
     }
 
-    FlxG.camera.flash(0xccffffff, 0.5, null, true);
+    Reg.screenEffect.flash(0xccffffff, 0.5, null, true);
     // FlxG.sound.play("assets/sounds/player/heal.wav", 0.5 * FlxG.save.data.sfxVolume);
   }
 }
