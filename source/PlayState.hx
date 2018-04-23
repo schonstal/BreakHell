@@ -17,6 +17,7 @@ class PlayState extends FlxState
   var playerProjectileGroup:FlxSpriteGroup;
   var enemyProjectileGroup:FlxSpriteGroup;
 
+  var reticle:Reticle;
   var player:Player;
   var playerRail:PlayerRail;
   var enemyGroup:EnemyGroup;
@@ -34,6 +35,10 @@ class PlayState extends FlxState
     Reg.score = 0;
     Reg.spawnRow = 0;
     Reg.scrollPosition = 0;
+
+    FlxG.debugger.drawDebug = true;
+    FlxG.debugger.visible = true;
+    FlxG.mouse.visible = false;
 
     bgColor = 0xff62acda;
 
@@ -65,10 +70,9 @@ class PlayState extends FlxState
     player.y = FlxG.height - 30;
     player.x = FlxG.width / 2 - player.width / 2;
 
-    playerRail = new PlayerRail();
+    reticle = new Reticle();
 
-    FlxG.debugger.drawDebug = true;
-    FlxG.debugger.visible = true;
+    playerRail = new PlayerRail();
 
     add(backgroundGroup);
     add(enemyGroup);
@@ -78,6 +82,7 @@ class PlayState extends FlxState
     add(wallGroup);
     add(enemyExplosionGroup);
     add(pointGroup);
+    add(reticle);
     add(gameOverGroup);
   }
 
