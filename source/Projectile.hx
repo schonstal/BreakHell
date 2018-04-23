@@ -71,6 +71,12 @@ class Projectile extends FlxSpriteGroup
       projectile.onCollide(null);
     }
 
+    if (projectile.y > FlxG.height + 64) {
+      projectile.exists = false;
+      explosionSprite.exists = false;
+      exists = false;
+    }
+
     super.update(elapsed);
   }
 

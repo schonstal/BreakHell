@@ -5,6 +5,7 @@ import flixel.FlxObject;
 import flixel.FlxSprite;
 import flixel.FlxState;
 import flixel.group.FlxSpriteGroup;
+import flixel.group.FlxGroup;
 import flixel.math.FlxRandom;
 import flixel.util.FlxTimer;
 import flixel.tweens.FlxTween;
@@ -25,9 +26,12 @@ class PlayState extends FlxState
   var enemyExplosionGroup:FlxSpriteGroup;
   var wallGroup:FlxSpriteGroup;
   var gameOverGroup:GameOverGroup;
+  var powerupGroup:FlxGroup;
   var hud:Hud;
 
   var backgroundGroup:BackgroundGroup;
+
+  var gameOver:Bool = false;
 
   override public function create():Void {
     super.create();
@@ -50,6 +54,7 @@ class PlayState extends FlxState
     gameOverGroup = new GameOverGroup();
     wallGroup = new FlxSpriteGroup();
     backgroundGroup = new BackgroundGroup();
+    powerupGroup = new FlxGroup();
     hud = new Hud();
 
     Reg.leftWall = new FlxSprite();
@@ -66,6 +71,7 @@ class PlayState extends FlxState
     Reg.pointService = new PointService(pointGroup);
     Reg.playerProjectileService = new ProjectileService(playerProjectileGroup);
     Reg.enemyExplosionService = new EnemyExplosionService(enemyExplosionGroup);
+    Reg.powerupService = new PowerupService(powerupGroup);
 
     player = new Player();
     player.init();
@@ -79,6 +85,7 @@ class PlayState extends FlxState
     add(backgroundGroup);
     add(enemyGroup);
     add(playerRail);
+    add(powerupGroup);
     add(playerProjectileGroup);
     add(player);
     add(wallGroup);
@@ -87,6 +94,11 @@ class PlayState extends FlxState
     add(hud);
     add(reticle);
     add(gameOverGroup);
+
+    if (FlxG.sound.music == null || !FlxG.sound.music.playing) {
+      FlxG.sound.playMusic("assets/music/gameplay.ogg", 0.8);
+    }
+    FlxG.sound.music.volume = 0.8;
   }
 
   override public function destroy():Void {
@@ -112,6 +124,10 @@ class PlayState extends FlxState
       }
     });
 
+    FlxG.overlap(player, powerupGroup, function(player:FlxObject, powerup:FlxObject):Void {
+      cast(powerup, Powerup).onPickup();
+    });
+
     if (FlxG.keys.justPressed.SPACE && !player.alive) {
       FlxG.switchState(new PlayState());
     }
@@ -123,7 +139,20 @@ class PlayState extends FlxState
     super.update(elapsed);
 
     if (!player.alive) {
-      gameOverGroup.visible = true;
+      if (!gameOver) {
+        FlxG.save.flush();
+        FlxG.sound.music.volume = 0.2;
+        FlxG.timeScale = 0.2;
+        new FlxTimer().start(0.1, function(t) {
+          gameOverGroup.exists = true;
+          hud.exists = false;
+          FlxTween.tween(FlxG, { timeScale: 1 }, 0.5, { ease: FlxEase.quartOut, onComplete: function(t) {
+            FlxG.timeScale = 1;
+            FlxG.sound.music.volume = 0.8;
+          }});
+        });
+      }
+      gameOver = true;
     }
   }
 }

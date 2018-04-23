@@ -55,4 +55,12 @@ class Enemy extends Actor {
     exists = true;
     health = startingHealth;
   }
+
+  override function die():Void {
+    super.die();
+
+    if (Reg.random.int(0, 100) < 2) {
+      Reg.powerupService.spawn("health", getMidpoint().x, row);
+    }
+  }
 }

@@ -40,7 +40,7 @@ class GameOverGroup extends FlxSpriteGroup {
     highScoreText.y = FlxG.height / 2 + 16;
     add(highScoreText);
 
-    visible = false;
+    exists = false;
   }
 
   public override function update(elapsed:Float):Void {
