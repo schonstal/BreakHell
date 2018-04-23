@@ -11,7 +11,7 @@ class Enemy extends Actor {
   public static var SPEED:Int = 10;
 
   var row:Int = 0;
-  var onFall:Void->Void;
+  var onFall:Int->Void;
 
   public function new() {
     super();
@@ -46,7 +46,7 @@ class Enemy extends Actor {
       points = 0;
       kill();
       if (onFall != null) {
-        onFall();
+        onFall(row);
       }
     }
 
@@ -55,7 +55,7 @@ class Enemy extends Actor {
     y = Reg.scrollPosition - (row * ROW_HEIGHT);
   }
 
-  public function initialize(column:Int, ?onFall:Void->Void):Void {
+  public function initialize(column:Int, ?onFall:Int->Void):Void {
     y = Reg.spawnRow * -ROW_HEIGHT;
     x = column * COLUMN_WIDTH + 41;
     row = Reg.spawnRow;

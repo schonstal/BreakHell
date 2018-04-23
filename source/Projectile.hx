@@ -40,15 +40,6 @@ class Projectile extends FlxSpriteGroup
     explosionSprite.loadGraphic('assets/images/projectiles/$name/explosion.png', true, 32, 32);
     explosionSprite.animation.add("explode", [0, 1, 2, 3], 15, false);
     explosionSprite.solid = false;
-    if (name == "enemy") {
-      explosionSprite.setFacingFlip(0, true, false);
-      explosionSprite.setFacingFlip(1, false, false);
-      explosionSprite.setFacingFlip(2, true, true);
-      explosionSprite.setFacingFlip(3, false, true);
-    } else {
-      explosionSprite.setFacingFlip(FlxObject.LEFT, false, false);
-      explosionSprite.setFacingFlip(FlxObject.RIGHT, true, false);
-    }
     explosionSprite.animation.finishCallback = explosionFinished;
     add(explosionSprite);
 
@@ -137,10 +128,15 @@ class Projectile extends FlxSpriteGroup
     if(!physical) return;
     physical = false;
 
-    explosionSprite.x = projectile.x - 5;
-    explosionSprite.y = projectile.y - 5;
+    explosionSprite.x = projectile.x;
+    explosionSprite.y = projectile.y;
+    explosionSprite.width = projectile.width;
+    explosionSprite.height = projectile.height;
+    explosionSprite.offset.x = projectile.offset.x;
+    explosionSprite.offset.y = projectile.offset.y;
     explosionSprite.visible = true;
     explosionSprite.animation.play("explode");
+
     if (name == "enemy") {
       explosionSprite.facing = Reg.random.int(0, 3);
     } else {

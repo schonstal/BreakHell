@@ -37,13 +37,14 @@ class PlayState extends FlxState
     Reg.random = new FlxRandom();
     Reg.started = false;
     Reg.score = 0;
-    Reg.spawnRow = 0;
+    Reg.spawnRow = 1;
     Reg.scrollPosition = 0;
     Reg.screenEffect = new ScreenEffectSprite();
 
     FlxG.debugger.drawDebug = true;
     FlxG.debugger.visible = true;
     FlxG.mouse.visible = false;
+    FlxG.timeScale = 1;
 
     bgColor = 0xff15282e;
 
@@ -88,8 +89,8 @@ class PlayState extends FlxState
     add(enemyGroup);
     add(playerRail);
     add(powerupGroup);
-    add(playerProjectileGroup);
     add(player);
+    add(playerProjectileGroup);
     add(wallGroup);
     add(enemyExplosionGroup);
     add(pointGroup);

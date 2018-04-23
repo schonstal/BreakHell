@@ -14,6 +14,7 @@ import flixel.tweens.FlxEase;
 
 class EnemyGroup extends FlxSpriteGroup {
   var spawnTimer:Float = 0;
+  var lastFallRow:Int = 0;
 
   var activeTween:FlxTween;
   var tweenPosition:Int = 0;
@@ -39,11 +40,13 @@ class EnemyGroup extends FlxSpriteGroup {
     Reg.spawnRow++;
   }
 
-  function onFall():Void {
-    scrollRate -= 0.1;
+  function onFall(row:Int):Void {
+    if(row <= lastFallRow) return;
+    lastFallRow = row;
 
-    if (scrollRate < 0.25) {
-      scrollRate = 0.25;
+    scrollRate -= 0.1;
+    if (scrollRate < 0.5) {
+      scrollRate = 0.5;
     }
   }
 
