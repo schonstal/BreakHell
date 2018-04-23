@@ -18,6 +18,7 @@ class PlayState extends FlxState
   var enemyProjectileGroup:FlxSpriteGroup;
 
   var player:Player;
+  var playerRail:PlayerRail;
   var enemyGroup:EnemyGroup;
   var pointGroup:FlxSpriteGroup;
   var enemyExplosionGroup:FlxSpriteGroup;
@@ -65,12 +66,16 @@ class PlayState extends FlxState
 
     player = new Player();
     player.init();
-    player.y = FlxG.height - 20;
+    player.y = FlxG.height - 40;
     player.x = FlxG.width / 2 - player.width / 2;
 
+    playerRail = new PlayerRail();
+
     FlxG.debugger.drawDebug = true;
+    // FlxG.debugger.visible = true;
 
     add(enemyGroup);
+    add(playerRail);
     add(playerProjectileGroup);
     add(player);
     add(wallGroup);

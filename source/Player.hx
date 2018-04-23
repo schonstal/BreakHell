@@ -10,6 +10,7 @@ import flixel.math.FlxVector;
 import flixel.group.FlxSpriteGroup;
 import flixel.util.FlxTimer;
 import flixel.util.FlxSpriteUtil;
+import flixel.addons.display.FlxNestedSprite;
 
 class Player extends Actor
 {
@@ -23,19 +24,22 @@ class Player extends Actor
   var shootTimer:Float = 0;
   var shootRate:Float = 0.1;
 
+  var turret:FlxNestedSprite;
+  var turretTimer:FlxTimer;
+
   var elapsed:Float = 0;
 
   public function new(X:Float=0,Y:Float=0) {
     super();
     x = X;
     y = Y;
-    loadGraphic("assets/images/player/player.png", true, 12, 12);
+    loadGraphic("assets/images/player/player_body.png");
 
-    width = 5;
+    width = 8;
     height = 8;
 
-    offset.y = 1;
-    offset.x = 3;
+    offset.y = 11;
+    offset.x = 11;
 
     maxVelocity.x = RUN_SPEED;
     maxVelocity.y = RUN_SPEED;
@@ -43,6 +47,11 @@ class Player extends Actor
     setFacingFlip(FlxObject.LEFT, true, false);
     setFacingFlip(FlxObject.RIGHT, false, false);
 
+    turret = new FlxNestedSprite();
+    turret.loadGraphic("assets/images/player/player_gun.png");
+    add(turret);
+
+    turretTimer = new FlxTimer();
     start();
   }
 
@@ -71,12 +80,24 @@ class Player extends Actor
     FlxG.camera.shake(0.005, 0.2);
 
     justHurt = true;
-    FlxSpriteUtil.flicker(this, 0.6, 0.04, true, true, function(flicker) {
-      justHurt = false;
+    turret.useColorTransform = true;
+    turret.setColorTransform(0, 0, 0, 1, 0, 0, 0, 0);
+
+    turretTimer.start(0.025, function(t) {
+      turret.setColorTransform(0, 0, 0, 1, 255, 255, 255, 0);
+
+      turretTimer.start(0.025, function(t) {
+        justHurt = false;
+        turret.setColorTransform();
+      });
     });
+
     //FlxG.sound.play("assets/sounds/player/hurt.wav", 1 * FlxG.save.data.sfxVolume);
 
     super.hurt(damage);
+  }
+
+  public override function flash():Void {
   }
 
   private function xMovement():Void {
@@ -132,6 +153,7 @@ class Player extends Actor
     this.elapsed = elapsed;
 
     if(alive && Reg.started) {
+      turret.relativeAngle = getMidpoint().angleBetween(FlxG.mouse.getWorldPosition());
       xMovement();
       //yMovement();
       if(pressed("shoot")) {
