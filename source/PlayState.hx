@@ -40,6 +40,7 @@ class PlayState extends FlxState
     Reg.spawnRow = 1;
     Reg.scrollPosition = 0;
     Reg.screenEffect = new ScreenEffectSprite();
+    Reg.difficulty = 0;
 
     FlxG.debugger.drawDebug = true;
     FlxG.debugger.visible = true;
@@ -168,5 +169,8 @@ class PlayState extends FlxState
       }
       gameOver = true;
     }
+
+    if (Reg.started) Reg.difficulty = Reg.score/50000;
+    if (Reg.difficulty >= 1) Reg.difficulty = 1;
   }
 }

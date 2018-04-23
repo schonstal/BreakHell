@@ -35,6 +35,13 @@ class Enemy extends Actor {
     );
   }
 
+  public override function hurt(amount:Float) {
+    super.hurt(amount);
+
+    var pitch:Int = Reg.random.int(0, 2);
+    //FlxG.sound.play('assets/sounds/enemy/hit$pitch.ogg', 0.3);
+  }
+
   public override function update(elapsed:Float):Void {
     if (health > 1 || startingHealth == 1) {
       animation.play("idle");
@@ -67,6 +74,9 @@ class Enemy extends Actor {
 
   override function die():Void {
     super.die();
+
+    var pitch:Int = Reg.random.int(0, 2);
+    FlxG.sound.play('assets/sounds/enemy/hit$pitch.ogg', 0.4);
 
     if (Reg.random.int(0, 100) < 2) {
       Reg.powerupService.spawn("health", getMidpoint().x, row);

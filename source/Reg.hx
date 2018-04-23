@@ -23,6 +23,7 @@ class Reg {
   public static var score:Int = 0;
   public static var spawnRow:Int = 0;
   public static var scrollPosition:Float = 0;
+  public static var difficulty:Float = 0;
 
   public static var leftWall:FlxSprite;
   public static var rightWall:FlxSprite;

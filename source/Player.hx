@@ -153,7 +153,9 @@ class Player extends Actor
 
       Reg.playerProjectileService.shoot(shooter.x - 3, shooter.y - 3, direction, facing);
       shootTimer = shootRate;
-      //FlxG.sound.play("assets/sounds/player/shoot.wav", 1 * FlxG.save.data.sfxVolume);
+
+      var pitch:Int = Reg.random.int(0, 3);
+      FlxG.sound.play('assets/sounds/player/shoot$pitch.ogg', 0.15);
     }
   }
 
@@ -187,7 +189,7 @@ class Player extends Actor
     exists = false;
     acceleration.y = acceleration.x = velocity.x = velocity.y = 0;
     Reg.enemyExplosionService.explode(x + width/2, y + height/2 + explosionOffset.y, 0, 0, this);
-    // FlxG.sound.play("assets/sounds/player/die.wav");
+    FlxG.sound.play("assets/sounds/player/death.ogg", 0.4);
   }
 
   private function updateTimers():Void {
