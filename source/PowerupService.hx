@@ -9,6 +9,7 @@ class PowerupService {
   var group:FlxGroup;
   var showParticles:Bool;
   var name:String;
+  var activeUpgradePowerup:Powerup;
 
   public function new(group:FlxGroup, name:String = "player", showParticles:Bool = false):Void {
     this.powerups = new Array<PowerupGroup>();

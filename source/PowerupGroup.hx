@@ -53,6 +53,12 @@ class PowerupGroup extends FlxSpriteGroup {
       particle.animation.add("2", [1]);
       particle.animation.play('$size');
 
+      if (name == "upgrade") {
+        particle.color = 0xffc1ffe8;
+      } else {
+        particle.color = 0xfffeffa4;
+      }
+
       particle.x = powerupSprite.x + Reg.random.int(1, 9);
       particle.y = powerupSprite.y;
 

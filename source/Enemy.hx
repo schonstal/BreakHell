@@ -83,13 +83,15 @@ class Enemy extends Actor {
       Reg.explosionSound = FlxG.sound.play('assets/sounds/enemy/hit$pitch.ogg', 0.6);
     }
 
-    if (Reg.random.int(0, 100) == 1) {
+    var powerupValue:Int = Reg.random.int(0, 200);
+
+    if (powerupValue < 4) {
       Reg.powerupService.spawn("health", getMidpoint().x, row);
     }
 
-    if (Reg.random.int(0, 100) == 2) {
-      if (Reg.player.shootRate > 0.7) {
-        Reg.powerupService.spawn("updgrade", getMidpoint().x, row);
+    if (startingHealth > 2 && powerupValue > 199) {
+      if (Reg.player.shootRate > 0.06) {
+        Reg.powerupService.spawn("upgrade", getMidpoint().x, row);
       } else {
         Reg.powerupService.spawn("health", getMidpoint().x, row);
       }

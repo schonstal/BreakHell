@@ -40,6 +40,9 @@ class Powerup extends FlxSprite {
     super.update(elapsed);
 
     y = Reg.scrollPosition - (row * Enemy.ROW_HEIGHT) - (height - Enemy.ROW_HEIGHT) / 2;
+    if (y > FlxG.height) {
+      kill();
+    }
   }
 
   public function onPickup():Void {
@@ -65,9 +68,9 @@ class Powerup extends FlxSprite {
   }
 
   function onPickupUpgrade():Void {
-    Reg.player.shootRate *= 0.9;
-    if (Reg.player.shootRate <= 0.7) {
-      Reg.player.shootRate = 0.7;
+    Reg.player.shootRate -= 0.01;
+    if (Reg.player.shootRate <= 0.06) {
+      Reg.player.shootRate = 0.06;
     }
 
     Reg.screenEffect.flash(0xccffffff, 0.5, null, true);
