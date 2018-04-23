@@ -136,6 +136,9 @@ class PlayState extends FlxState
       if (player.alive) {
         player.hurt(100);
       }
+      var e:Enemy = cast(enemy, Enemy);
+      e.points = 0;
+      e.kill();
     });
 
     if (FlxG.keys.justPressed.SPACE && !player.alive) {
