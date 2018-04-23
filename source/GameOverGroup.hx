@@ -23,21 +23,21 @@ class GameOverGroup extends FlxSpriteGroup {
     );
 
     gameOverSprite = new FlxSprite();
-    gameOverSprite.loadGraphic("assets/images/hud/gameOver.png");
+    gameOverSprite.loadGraphic("assets/images/hud/GameOver.png");
     add(gameOverSprite);
 
     scoreText = new FlxBitmapText(font);
     scoreText.letterSpacing = -2;
     scoreText.text = "0";
     scoreText.x = 4;
-    scoreText.y = FlxG.height / 2 + 16;
+    scoreText.y = 124;
     add(scoreText);
 
     highScoreText = new FlxBitmapText(font);
     highScoreText.letterSpacing = -2;
     highScoreText.text = "0";
     highScoreText.x = FlxG.width / 2 - 8;
-    highScoreText.y = FlxG.height / 2 + 16;
+    highScoreText.y = 158;
     add(highScoreText);
 
     exists = false;

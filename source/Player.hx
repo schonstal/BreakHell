@@ -100,7 +100,9 @@ class Player extends Actor
       });
     });
 
-    //FlxG.sound.play("assets/sounds/player/hurt.wav", 1 * FlxG.save.data.sfxVolume);
+    if (health > 0) {
+      FlxG.sound.play("assets/sounds/player/hurt.ogg", 0.5);
+    }
 
     super.hurt(damage);
   }
@@ -189,7 +191,7 @@ class Player extends Actor
     exists = false;
     acceleration.y = acceleration.x = velocity.x = velocity.y = 0;
     Reg.enemyExplosionService.explode(x + width/2, y + height/2 + explosionOffset.y, 0, 0, this);
-    FlxG.sound.play("assets/sounds/player/death.ogg", 0.4);
+    FlxG.sound.play("assets/sounds/player/death.ogg", 0.6);
   }
 
   private function updateTimers():Void {

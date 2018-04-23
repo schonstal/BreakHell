@@ -57,6 +57,6 @@ class Powerup extends FlxSprite {
     }
 
     Reg.screenEffect.flash(0xccffffff, 0.5, null, true);
-    FlxG.sound.play("assets/sounds/health.ogg", 0.3);
+    FlxG.sound.play("assets/sounds/health.ogg", 0.6);
   }
 }
