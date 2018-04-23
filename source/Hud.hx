@@ -38,7 +38,7 @@ class Hud extends FlxSpriteGroup {
     healthLabel.x = FlxG.width - 4 - healthLabel.width;
     //add(healthLabel);
 
-    healthBarBackground = new FlxSprite(0, FlxG.height - 30);
+    healthBarBackground = new FlxSprite(0, 0);
     healthBarBackground.loadGraphic("assets/images/hud/healthBar.png");
     add(healthBarBackground); 
 
@@ -51,8 +51,8 @@ class Hud extends FlxSpriteGroup {
     scoreText = new FlxBitmapText(font);
     scoreText.letterSpacing = -1;
     scoreText.text = "0";
-    scoreText.x = 40;
-    scoreText.y = healthBarBackground.y + 8;
+    scoreText.x = 0;
+    scoreText.y = healthBarBackground.height - 2;
     add(scoreText);
   }
 
