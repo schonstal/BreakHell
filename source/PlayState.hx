@@ -30,7 +30,6 @@ class PlayState extends FlxState
   var hud:Hud;
 
   var backgroundGroup:BackgroundGroup;
-
   var gameOver:Bool = false;
 
   override public function create():Void {
@@ -40,6 +39,7 @@ class PlayState extends FlxState
     Reg.score = 0;
     Reg.spawnRow = 0;
     Reg.scrollPosition = 0;
+    Reg.screenEffect = new ScreenEffectSprite();
 
     FlxG.debugger.drawDebug = true;
     FlxG.debugger.visible = true;
@@ -101,6 +101,8 @@ class PlayState extends FlxState
       FlxG.sound.playMusic("assets/music/gameplay.ogg", 0.8);
     }
     FlxG.sound.music.volume = 0.8;
+
+    add(Reg.screenEffect);
   }
 
   override public function destroy():Void {

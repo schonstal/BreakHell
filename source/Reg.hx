@@ -28,4 +28,6 @@ class Reg {
   public static var rightWall:FlxSprite;
 
   public static var TAU:Float = 6.28318530718;
+
+  public static var screenEffect:ScreenEffectSprite;
 }
