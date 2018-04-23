@@ -6,6 +6,7 @@ import flixel.FlxCamera;
 import flixel.math.FlxPoint;
 import flixel.math.FlxRandom;
 import flixel.group.FlxSpriteGroup;
+import flixel.system.FlxSound;
 
 class Reg {
   public static var playerProjectileService:ProjectileService;
@@ -31,4 +32,7 @@ class Reg {
   public static var TAU:Float = 6.28318530718;
 
   public static var screenEffect:ScreenEffectSprite;
+
+  public static var explosionSound:FlxSound;
+  public static var hitSound:FlxSound;
 }

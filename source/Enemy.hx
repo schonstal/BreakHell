@@ -38,7 +38,7 @@ class Enemy extends Actor {
   public override function hurt(amount:Float) {
     super.hurt(amount);
 
-    var pitch:Int = Reg.random.int(0, 2);
+    //var pitch:Int = Reg.random.int(0, 2);
     //FlxG.sound.play('assets/sounds/enemy/hit$pitch.ogg', 0.3);
   }
 
@@ -76,7 +76,12 @@ class Enemy extends Actor {
     super.die();
 
     var pitch:Int = Reg.random.int(0, 2);
-    FlxG.sound.play('assets/sounds/enemy/hit$pitch.ogg', 0.6);
+    if (Reg.player.alive) {
+      if (Reg.explosionSound != null) {
+        Reg.explosionSound.stop();
+      }
+      Reg.explosionSound = FlxG.sound.play('assets/sounds/enemy/hit$pitch.ogg', 0.6);
+    }
 
     if (Reg.random.int(0, 100) < 2) {
       Reg.powerupService.spawn("health", getMidpoint().x, row);

@@ -29,14 +29,14 @@ class GameOverGroup extends FlxSpriteGroup {
     scoreText = new FlxBitmapText(font);
     scoreText.letterSpacing = -2;
     scoreText.text = "0";
-    scoreText.x = 4;
+    scoreText.x = FlxG.width / 2 - scoreText.width / 2;
     scoreText.y = 124;
     add(scoreText);
 
     highScoreText = new FlxBitmapText(font);
     highScoreText.letterSpacing = -2;
     highScoreText.text = "0";
-    highScoreText.x = FlxG.width / 2 - 8;
+    highScoreText.x = FlxG.width / 2 - highScoreText.width / 2;
     highScoreText.y = 158;
     add(highScoreText);
 
@@ -47,8 +47,8 @@ class GameOverGroup extends FlxSpriteGroup {
     scoreText.text = "" + Reg.score;
     highScoreText.text = "" + FlxG.save.data.highScore;
 
-    scoreText.x = FlxG.width / 2 - scoreText.width - 16;
-    highScoreText.x = FlxG.width / 2 + 16;
+    scoreText.x = FlxG.width / 2 - scoreText.width / 2;
+    highScoreText.x = FlxG.width / 2 - highScoreText.width / 2;
 
     super.update(elapsed);
   }
