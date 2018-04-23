@@ -62,7 +62,7 @@ class PlayState extends FlxState
 
     player = new Player();
     player.init();
-    player.y = FlxG.height - 40;
+    player.y = FlxG.height - 30;
     player.x = FlxG.width / 2 - player.width / 2;
 
     playerRail = new PlayerRail();

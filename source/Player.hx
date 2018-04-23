@@ -27,6 +27,8 @@ class Player extends Actor
   var turret:FlxNestedSprite;
   var turretTimer:FlxTimer;
 
+  var shooter:FlxNestedSprite;
+
   var elapsed:Float = 0;
 
   public function new(X:Float=0,Y:Float=0) {
@@ -50,6 +52,12 @@ class Player extends Actor
     turret = new FlxNestedSprite();
     turret.loadGraphic("assets/images/player/player_gun.png");
     add(turret);
+
+    shooter = new FlxNestedSprite();
+    shooter.makeGraphic(1, 1, 0);
+    shooter.relativeX = turret.width / 2;
+    shooter.relativeY = 0;
+    turret.add(shooter);
 
     turretTimer = new FlxTimer();
     start();
@@ -143,7 +151,7 @@ class Player extends Actor
         FlxG.mouse.y - getMidpoint().y
       ).normalize();
 
-      Reg.playerProjectileService.shoot(x + (facing == FlxObject.LEFT ? -8 : 8), y + 3, direction, facing);
+      Reg.playerProjectileService.shoot(shooter.x - 3, shooter.y - 3, direction, facing);
       shootTimer = shootRate;
       //FlxG.sound.play("assets/sounds/player/shoot.wav", 1 * FlxG.save.data.sfxVolume);
     }
@@ -154,6 +162,7 @@ class Player extends Actor
 
     if(alive && Reg.started) {
       turret.relativeAngle = getMidpoint().angleBetween(FlxG.mouse.getWorldPosition());
+
       xMovement();
       //yMovement();
       if(pressed("shoot")) {
