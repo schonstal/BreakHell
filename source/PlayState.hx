@@ -112,7 +112,7 @@ class PlayState extends FlxState
     if (FlxG.sound.music == null || !FlxG.sound.music.playing) {
       FlxG.sound.playMusic("assets/music/gameplay.ogg", 0.8);
     }
-    FlxG.sound.music.volume = 0;
+    FlxG.sound.music.volume = 0.8;
 
     add(Reg.screenEffect);
   }
@@ -180,7 +180,7 @@ class PlayState extends FlxState
       gameOver = true;
     }
 
-    if (Reg.started) Reg.difficulty = Reg.score/50000;
+    if (Reg.started) Reg.difficulty = Reg.score/30000;
     if (Reg.difficulty >= 1) Reg.difficulty = 1;
   }
 }

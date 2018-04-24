@@ -27,7 +27,7 @@ class EnemyGroup extends FlxSpriteGroup {
   }
 
   function spawnRow():Void {
-    var percentage = FlxMath.lerp(0.5, 0.8, Reg.difficulty);
+    var percentage = FlxMath.lerp(0.4, 0.8, Reg.difficulty);
 
     var column:Int;
     for (column in 0...8) {

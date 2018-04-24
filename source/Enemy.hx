@@ -4,11 +4,15 @@ import flixel.FlxG;
 import flixel.FlxSprite;
 import flixel.util.FlxTimer;
 import flixel.math.FlxPoint;
+import flixel.math.FlxMath;
 
 class Enemy extends Actor {
   public static var ROW_HEIGHT:Int = 12;
   public static var COLUMN_WIDTH:Int = 30;
   public static var SPEED:Int = 10;
+  public static var probabilities:Array<Int> = [
+    1, 1, 1, 1, 1, 2, 2, 2, 2, 3, 3, 3, 4, 4
+  ];
 
   var row:Int = 0;
   var onFall:Int->Void;
@@ -17,7 +21,9 @@ class Enemy extends Actor {
     super();
     immovable = true;
 
-    startingHealth = Reg.random.int(1, 4);
+    var healthRange = Reg.random.int(0, probabilities.length - 1);
+    startingHealth = probabilities[healthRange];
+
     health = startingHealth;
     points = Std.int(startingHealth * 50);
 
@@ -38,8 +44,8 @@ class Enemy extends Actor {
   public override function hurt(amount:Float) {
     super.hurt(amount);
 
-    //var pitch:Int = Reg.random.int(0, 2);
-    //FlxG.sound.play('assets/sounds/enemy/hit$pitch.ogg', 0.3);
+    var pitch:Int = Reg.random.int(0, 2);
+    Reg.hitSound = FlxG.sound.play('assets/sounds/enemy/hit$pitch.ogg', 0.4);
   }
 
   public override function update(elapsed:Float):Void {
@@ -80,7 +86,7 @@ class Enemy extends Actor {
       if (Reg.explosionSound != null) {
         Reg.explosionSound.stop();
       }
-      Reg.explosionSound = FlxG.sound.play('assets/sounds/enemy/hit$pitch.ogg', 0.6);
+      Reg.explosionSound = FlxG.sound.play('assets/sounds/enemy/destroy20.ogg', 0.3);
     }
 
     var powerupValue:Int = Reg.random.int(0, 200);
