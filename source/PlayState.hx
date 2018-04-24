@@ -43,6 +43,13 @@ class PlayState extends FlxState
     Reg.scrollPosition = 0;
     Reg.screenEffect = new ScreenEffectSprite();
     Reg.difficulty = 0;
+    Reg.screenEffect.flash(0xffffffff, 0.5, null, true);
+
+    if (!Reg.firstStarted) {
+      FlxG.sound.play("assets/sounds/player/death.ogg", 0.6);
+      FlxG.camera.shake(0.005, 0.2);
+      Reg.firstStarted = true;
+    }
 
     FlxG.debugger.drawDebug = true;
     FlxG.debugger.visible = true;

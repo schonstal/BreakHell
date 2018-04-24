@@ -35,4 +35,6 @@ class Reg {
 
   public static var explosionSound:FlxSound;
   public static var hitSound:FlxSound;
+
+  public static var firstStarted:Bool = false;
 }

@@ -11,7 +11,7 @@ class PlayerRail extends FlxSprite
   }
 
   public override function update(elapsed:Float):Void {
-    y = Reg.player.y;
+    y = FlxG.height - 30;
 
     super.update(elapsed);
   }
