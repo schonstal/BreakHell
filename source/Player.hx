@@ -84,7 +84,7 @@ class Player extends Actor
   public override function hurt(damage:Float):Void {
     if(justHurt && damage < 100) return;
 
-    FlxG.camera.flash(0xccff1472, 0.5, null, true);
+    Reg.screenEffect.flash(0xccff1472, 0.5, null, true);
     FlxG.camera.shake(0.005, 0.2);
 
     justHurt = true;

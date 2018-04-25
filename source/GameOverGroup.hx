@@ -23,7 +23,7 @@ class GameOverGroup extends FlxSpriteGroup {
     );
 
     gameOverSprite = new FlxSprite();
-    gameOverSprite.loadGraphic("assets/images/hud/GameOver.png");
+    gameOverSprite.loadGraphic("assets/images/hud/gameOver.png");
     add(gameOverSprite);
 
     scoreText = new FlxBitmapText(font);
