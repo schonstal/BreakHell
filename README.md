@@ -1,3 +1,5 @@
-# Ludum Dare 41
+# BREAK // HELL
 
-Bullet Hell + Breakout
+A combination of Bullet Hell + Breakout made for Ludum Dare 41.
+
+![screenshot.gif](screenshot)
